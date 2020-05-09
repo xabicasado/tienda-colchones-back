@@ -1,5 +1,5 @@
-// import { Product, typeEnum } from '../models/products';
-const Product = require('../models/products');
+const httpStatus = require('http-status');
+const { Product, typeEnum } = require('../models/products');
 
 /**
  * Get a product
@@ -20,7 +20,7 @@ const get = (req, res, next) => {
  * @property {string} req.query.filter - Filter by including this string in the name.
  * @returns { docs: Product[], total: Integer, limit: Integer, offset: Integer }
  */
-const list = (req, res, next) => {
+const _list = (req, res, next) => {
     const { sort = '-createdAt', filter = '', skip = 0, limit = 50 } = req.query;
     Product.list({ sort, filter, skip, limit }).then((data) => {
         res.json(data);
@@ -37,7 +37,7 @@ const list = (req, res, next) => {
  */
 const getColchonProducts = (req, res, next) => {
     const { sort = '-createdAt', filter = '', skip = 0, limit = 50 } = req.query;
-    Product.getColchonProducts().then((data) => {
+    Product.getColchonProducts({ sort, filter, skip, limit }).then((data) => {
         res.json(data);
     }).catch(e => next(e));
 }
@@ -52,7 +52,7 @@ const getColchonProducts = (req, res, next) => {
  */
 const getSomierProducts = (req, res, next) => {
     const { sort = '-createdAt', filter = '', skip = 0, limit = 50 } = req.query;
-    Product.getSomierProducts().then((data) => {
+    Product.getSomierProducts({ sort, filter, skip, limit }).then((data) => {
         res.json(data);
     }).catch(e => next(e));
 }
@@ -67,14 +67,68 @@ const getSomierProducts = (req, res, next) => {
  */
 const getFeaturedProducts = (req, res, next) => {
     const { sort = '-createdAt', filter = '', skip = 0, limit = 50 } = req.query;
-    Product.getFeaturedProducts().then((data) => {
+    Product.getFeaturedProducts({ sort, filter, skip, limit }).then((data) => {
         res.json(data);
     }).catch(e => next(e));
+}
+
+/**
+ * Create new product
+ * @property {string} req.body.name - The name of the product
+ * @property {string} req.body.type - The product type
+ * @property {string} req.body.price - The price of the product
+ * @property {Object} req.body.image - The image of the product
+ * @property {Object} req.body.description - The description of the product
+ * @property {Object} req.body.isFeatured - Boolean representing either it is a featured or not
+ * @returns {{ msg: String }}
+ */
+const _create = (req, res, next) => {
+    // const product = new Product(req.body);
+    const product = new Product({
+        name: req.body.name,
+        type: req.body.type,
+        price: req.body.price,
+        image: req.body.image,
+        description: req.body.description,
+        isFeatured: req.body.isFeatured
+    });
+    return product.save().then(() => {
+        res.status(httpStatus.CREATED).json({ msg: 'Product saved!' })
+    }).catch(e => next(e));
+}
+
+/**
+ * Create new colchon type product
+ * @property {string} req.body.name - The name of the colchon
+ * @property {string} req.body.price - The price of the colchon
+ * @property {Object} req.body.image - The image of the colchon
+ * @property {Object} req.body.description - The description of the colchon
+ * @property {Object} req.body.isFeatured - Boolean representing either it is a featured or not
+ * @returns {{ msg: String }}
+ */
+const createColchon = (req, res, next) => {
+    req.body.type = typeEnum.COLCHON;
+    return _create(req, res, next);
+}
+
+/**
+ * Create new somier type product
+ * @property {string} req.body.name - The name of the somier
+ * @property {string} req.body.price - The price of the somier
+ * @property {Object} req.body.image - The image of the somier
+ * @property {Object} req.body.description - The description of the somier
+ * @property {Object} req.body.isFeatured - Boolean representing either it is a featured or not
+ * @returns {{ msg: String }}
+ */
+const createSomier = (req, res, next) => {
+    req.body.type = typeEnum.SOMIER;
+    return _create(req, res, next);
 }
 
 module.exports = { 
     getColchonProducts,
     getSomierProducts,
     getFeaturedProducts,
-    list
+    createColchon,
+    createSomier
 };

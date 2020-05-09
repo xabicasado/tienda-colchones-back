@@ -10,13 +10,8 @@ const typeEnum = {
 
 // Product schema 
 const ProductSchema = new Schema({
-    productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
-    },
     type: {
         type: Number,
-        enum: typeEnum,
         required: true
     },
     name: {
@@ -74,11 +69,11 @@ ProductSchema.statics = {
      * @returns {docs: Product[], total: Integer, limit: Integer, offset: Integer}
      */
     list({ sort = '-createdAt', filter = '', skip = 0, limit = 50, type, isFeatured } = {}) {
-        return this.paginate({
-            name: new RegExp(filter, 'i'),
-            type: type,
-            isFeatured: isFeatured },
-        {
+        const filters = { name: new RegExp(filter, 'i') }
+        if (type) filters.type = type;
+        if (isFeatured) filters.isFeatured = isFeatured;
+        
+        return this.paginate(filters, {
             sort,
             offset: skip,
             limit,
@@ -126,4 +121,4 @@ ProductSchema.statics = {
 }
 
 ProductSchema.plugin(mongoosePaginate);
-module.exports = mongoose.model('Product', ProductSchema);
+module.exports = { Product: mongoose.model('Product', ProductSchema), typeEnum };
