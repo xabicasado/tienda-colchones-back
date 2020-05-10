@@ -31,7 +31,7 @@ const list = (req, res, next) => {
  * @returns {User} User - Current user profile.
  */
 const login = (req, res, next) => {
-    User.getByUsername(req.body.username.toLowerCase()).then((user) => {
+    User.getByEmail(req.body.email).then((user) => {
         // Calculate the hash of the received password using the stored salt and check if matches stored one
         const genPasssword = hasher.sha512(req.body.password, user.password.salt);
         if (genPasssword.hash !== user.password.hash) {

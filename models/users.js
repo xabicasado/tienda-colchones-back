@@ -3,7 +3,7 @@
  */
 
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
+const mongoosePaginate = require('mongoose-paginate-v2');
 const Schema = mongoose.Schema;
 const httpStatus = require('http-status');
 const APIError  = require('../helpers/APIError');
@@ -50,8 +50,8 @@ UserSchema.statics = {
     },
     
     /**
-     * Get user by username
-     * @param {String} username - The username of user.
+     * Get user by email
+     * @param {String} email - The email of user.
      * @returns {Promise<User, APIError>}
      */
     getByEmail(email) {

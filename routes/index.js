@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const productsCtrl = require('../controllers/products');
-// const usersCtrl = require('../controllers/users');
+const usersCtrl = require('../controllers/users');
 
 /* GET home page. */
 /*
