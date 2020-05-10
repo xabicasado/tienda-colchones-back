@@ -24,8 +24,8 @@ router.route('/colchones/:colchonId')
 
 router.route('/somieres/:somierId')
   .get(productsCtrl.get);
-/*
+
 router.route('/login')
   .get(usersCtrl.login);
-*/
+
 module.exports = router;
