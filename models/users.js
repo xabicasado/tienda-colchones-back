@@ -1,19 +1,30 @@
+/**
+ * @module models/users
+ */
+
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
+const httpStatus = require('http-status');
+const APIError  = require('../helpers/APIError');
 
 // User schema
 const UserSchema = new Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
-    },
     email: {
         type: String,
-        required: true
+        required: true,
+        index: true,
+        unique: true,
     },
     password: {
-        type: String,
-        required: true
+        hash: {
+          type: String,
+          required: true
+        },
+        salt: {
+          type: String,
+          required: true
+        }
     },
     createdAt: {
         type: Date,
@@ -21,4 +32,52 @@ const UserSchema = new Schema({
     }
 });
 
+// Product static methods
+UserSchema.statics = {
+    /**
+     * Get user by id
+     * @param {String} id - The id of user.
+     * @returns {Promise<User, APIError>}
+     */
+    getById(id) {
+        return this.findById(id).then((user) => {
+            if (user) {
+                return user;
+            }
+            const err = new APIError('No such user exists!', httpStatus.NOT_FOUND);
+            return Promise.reject(err);
+        });
+    },
+    
+    /**
+     * Get user by username
+     * @param {String} username - The username of user.
+     * @returns {Promise<User, APIError>}
+     */
+    getByEmail(email) {
+        return this.findOne({ email }).then((user) => {
+            if (user) {
+              return user;
+            }
+            const err = new APIError('No such user exists!', httpStatus.NOT_FOUND);
+            return Promise.reject(err);
+          });
+    },
+    
+    /**
+     * List users in descending order of 'createdAt' timestamp, paginating them.
+     * @param {number} skip - Number of users to be skipped.
+     * @param {number} limit - Limit number of users to be returned.
+     * @param {string} sort - Sort by this field.
+     * @param {string} filter - Filter by including this string in the email.
+     * @returns {Promise<{docs: User[], total: Integer, limit: Integer, offset: Integer}>}
+     */
+    list({ sort = '-createdAt', filter = '', skip = 0, limit = 50 } = {}) {
+        return this.paginate({ email: new RegExp(filter, 'i')}, {
+            sort, offset: skip, limit, select: { __v: 0, password: 0 }
+        });
+    }
+}
+
+UserSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('User', UserSchema);

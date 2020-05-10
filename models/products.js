@@ -1,6 +1,12 @@
+/**
+ * @module models/products
+ */
+
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 const Schema = mongoose.Schema;
+const httpStatus = require('http-status');
+const APIError  = require('../helpers/APIError');
 const productsFixture = require('../fixtures/products.json')
 
 // Product types dict

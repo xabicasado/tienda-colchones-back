@@ -1,3 +1,7 @@
+/**
+ * @module controllers/products
+ */
+
 const httpStatus = require('http-status');
 const { Product, typeEnum } = require('../models/products');
 
@@ -10,7 +14,7 @@ const get = (req, res, next) => {
     Product.get(req.params.productId)
         .then(product => res.json(product))
         .catch(e => next(e));
-  }
+}
 
 /**
  * Get products list.
@@ -163,12 +167,12 @@ const remove = (req, res, next) => {
 }
 
 module.exports = { 
-    getColchonProducts,
-    getSomierProducts,
-    getFeaturedProducts,
-    get,
     createColchon,
     createSomier,
     edit,
+    get,
+    getColchonProducts,
+    getFeaturedProducts,
+    getSomierProducts,
     remove
 };

@@ -19,7 +19,7 @@ const app = express();
   }
   try {
     await mongoose.connect(url, options);
-    console.log(mongoose.connection.db.collection('products').countDocuments());
+   //  console.log(mongoose.connection.db.collection('products').countDocuments());
   } catch(err) {
     console.log(err);
   }

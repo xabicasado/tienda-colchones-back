@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const productsCtrl = require('../controllers/products');
+// const usersCtrl = require('../controllers/users');
 
 /* GET home page. */
 /*
@@ -23,5 +24,8 @@ router.route('/colchones/:colchonId')
 
 router.route('/somieres/:somierId')
   .get(productsCtrl.get);
-
+/*
+router.route('/login')
+  .get(usersCtrl.login);
+*/
 module.exports = router;
