@@ -12,11 +12,14 @@ const app = express();
 
 // connect to mongo db
 (async () => {
+  const url = 'mongodb://localhost/tienda-colchones'
+  const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true 
+  }
   try {
-    await mongoose.connect('mongodb://localhost/tienda-colchones', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true 
-    });
+    await mongoose.connect(url, options);
+    console.log(mongoose.connection.db.collection('products').countDocuments());
   } catch(err) {
     console.log(err);
   }

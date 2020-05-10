@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 const Schema = mongoose.Schema;
+const productsFixture = require('../fixtures/products.json')
 
 // Product types dict
 const typeEnum = {
@@ -117,7 +118,14 @@ ProductSchema.statics = {
      */
     getFeaturedProducts({ sort = '-createdAt', filter = '', skip = 0, limit = 50, isFeatured = true } = {}) {
         return this.list({ sort, filter, limit, skip, isFeatured })
-    }    
+    },
+
+    /**
+     * Create and populate products collection
+     */
+    populateProducts() {
+        this.insertMany(productsFixture);
+    }
 }
 
 ProductSchema.plugin(mongoosePaginate);

@@ -1,0 +1,24 @@
+[
+    {
+        "_id": 1,
+        "isFeatured": false,
+        "name": "Colchon de prueba",
+        "type": 1,
+        "price": "259",
+        "image": "path/to/path/colchon_de_prueba",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "createdAt": "2020-05-09T16:42:18.342Z",
+        "__v": 0
+    },
+    {
+        "_id": 2,
+        "isFeatured": true,
+        "name": "Colchon destacado",
+        "type": 1,
+        "price": "179",
+        "image": "path/to/path/colchon_destacado",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "createdAt": "2020-05-09T16:44:44.634Z",
+        "__v": 0
+    }
+]
