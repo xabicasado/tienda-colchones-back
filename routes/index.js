@@ -18,4 +18,10 @@ router.route('/somieres')
   .get(productsCtrl.getSomierProducts)
   .post(productsCtrl.createSomier);
 
+router.route('/colchones/:colchonId')
+  .get(productsCtrl.get);
+
+router.route('/somieres/:somierId')
+  .get(productsCtrl.get);
+
 module.exports = router;

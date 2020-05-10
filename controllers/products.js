@@ -125,10 +125,50 @@ const createSomier = (req, res, next) => {
     return _create(req, res, next);
 }
 
+/**
+ * Edit a product
+ * @property {string} req.params.productId - The id of the product.
+ * @property {string} req.body.name - The name of the somier
+ * @property {string} req.body.price - The price of the somier
+ * @property {Object} req.body.image - The image of the somier
+ * @property {Object} req.body.description - The description of the somier
+ * @property {Object} req.body.isFeatured - Boolean representing either it is a featured or not
+ * @returns {{ msg: String }}
+ */
+const edit = (req, res, next) => {
+    Product.get(req.params.productId).then((product) => {
+        product.name = req.body.name;
+        product.price = req.body.price;
+        product.image = req.body.image;
+        product.description = req.body.description;
+        product.isFeatured = req.body.isFeatured;
+        
+        return product.save().then(() => {
+            res.status(httpStatus.OK).json({ msg: 'Product edited correctly!' })
+        }).catch(e => next(e));
+    }).catch(e => next(e));
+}
+ 
+/**
+ * Delete a product
+ * @property {string} req.params.productId - The id of the product.
+ * @returns { msg: String }
+ */
+const remove = (req, res, next) => {
+    Product.get(req.params.productId).then((product) => {
+        return product.remove().then(() => {
+            res.status(httpStatus.NO_CONTENT).json({ msg: 'Product deleted!' })
+        }).catch(e => next(e));
+    }).catch(e => next(e));
+}
+
 module.exports = { 
     getColchonProducts,
     getSomierProducts,
     getFeaturedProducts,
+    get,
     createColchon,
-    createSomier
+    createSomier,
+    edit,
+    remove
 };
