@@ -26,6 +26,6 @@ router.route('/somieres/:somierId')
   .get(productsCtrl.get);
 
 router.route('/login')
-  .get(usersCtrl.login);
+  .post(usersCtrl.login);
 
 module.exports = router;
