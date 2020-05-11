@@ -7,6 +7,7 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 const Schema = mongoose.Schema;
 const httpStatus = require('http-status');
 const APIError  = require('../helpers/APIError');
+const usersFixture = require('../fixtures/users.json')
 
 // User schema
 const UserSchema = new Schema({
@@ -76,6 +77,13 @@ UserSchema.statics = {
         return this.paginate({ email: new RegExp(filter, 'i')}, {
             sort, offset: skip, limit, select: { __v: 0, password: 0 }
         });
+    },
+
+    /**
+     * Create and populate users collection
+     */
+    populateUsers() {
+        this.insertMany(usersFixture);
     }
 }
 
