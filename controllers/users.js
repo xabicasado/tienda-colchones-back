@@ -75,6 +75,7 @@ const changePassword = (req, res, next) => {
 
 module.exports = { 
     changePassword,
+    list,
     login,
     logout
 };
