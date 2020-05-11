@@ -1,0 +1,12 @@
+[
+    {
+        "_id": 1,
+        "email": "admin@ginzo.tech",
+        "password": {
+            "salt": "8aadd438255e0521",
+            "hash": "8334aec75d3359cf3e45d7a230724a6143fde1e37105e293a9cd86c5ae0d8e469d377416b3824e751cd39ecb147a799bbbd3eec7064cf6f2396394c3ab5c0ea3"
+        },
+        "createdAt": "2020-05-09T16:42:18.342Z",
+            "__v": 0
+    }
+]
